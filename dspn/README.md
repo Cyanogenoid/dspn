@@ -5,6 +5,9 @@ In particular, `train.py` is the main training loop, `model.py` contains the net
 
 Make sure that you have the requirements listed below installed.
 
+You can keep track of model training with Tensorboard.
+Just point it at the `runs` directory that is created when training a model and you can view losses, how good the DSPN model thinks the initial and predicted sets are (`eval_first` and `eval_last`), and view intermediate predictions throughout training.
+
 ## MNIST
 
 ### Training
