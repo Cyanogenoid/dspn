@@ -1,0 +1,14 @@
+test.py
+mnist
+*.pyc
+__pycache__
+logs
+cifar10
+*.png
+*.jpg
+out
+clevr
+runs
+results
+*.pdf
+*.zip
