@@ -9,7 +9,7 @@ This is done by backpropagating through a set encoder to act as a set decoder.
 To use the decoder, you only need [`dspn.py`][1].
 You can see how it is used in [`model.py`][2] with `build_net` and the `Net` class.
 For details on the exact steps to reproduce the experiments, check out the README in the `dspn` directory.
-You can download pre-trained models and the predictions thereof from the [Reseources][3] page.
+You can download pre-trained models and the predictions thereof from the [Resources][3] page.
 
 # BibTeX entry
 
