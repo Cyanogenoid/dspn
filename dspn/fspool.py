@@ -10,6 +10,7 @@ class FSPool(nn.Module):
         FSPool: Learning Set Representations with Featurewise Sort Pooling.
         Yan Zhang, Jonathon Hare, Adam Prügel-Bennett
         https://arxiv.org/abs/1906.02795
+        https://github.com/Cyanogenoid/fspool
     """
 
     def __init__(self, in_channels, n_pieces, relaxed=False):
