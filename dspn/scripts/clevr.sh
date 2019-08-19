@@ -7,8 +7,8 @@ USE_BASELINE=$3
 
 if [ ! -z "$USE_BASELINE" ]
 then
-    PREFIX="base"
-    ARGS="--baseline --decoder MLPDecoder"
+    PREFIX="rnn"
+    ARGS="--baseline --decoder RNNDecoder"
 else
     PREFIX="dspn"
     ARGS="--decoder DSPN"

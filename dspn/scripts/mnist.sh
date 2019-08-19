@@ -8,6 +8,6 @@ python train.py $ARGS --decoder DSPN --name dspn-mnist
 python train.py $ARGS --decoder DSPN --name test --resume logs/dspn-mnist --eval-only --export-progress --export-dir out/mnist/dspn
 
 # Baseline train
-python train.py $ARGS --decoder MLPDecoder --baseline --name base-mnist
+python train.py $ARGS --decoder RNNDecoder --baseline --name rnn-mnist
 # Baseline test and export
-python train.py $ARGS --decoder MLPDecoder --baseline --name test --resume logs/base-mnist --eval-only --export-dir out/mnist/base
+python train.py $ARGS --decoder RNNDecoder --baseline --name test --resume logs/rnn-mnist --eval-only --export-dir out/mnist/rnn

@@ -33,8 +33,8 @@ for j, index in enumerate(args.n):
     for i in range(11):
         points = list(load_file(f"out/mnist/dspn/detections/{index}-step{i}.txt"))
         progress.append(points)
-    progress.append(list(load_file(f"out/mnist/base/groundtruths/{index}.txt")))
-    progress.append(list(load_file(f"out/mnist/base/detections/{index}.txt")))
+    progress.append(list(load_file(f"out/mnist/rnn/groundtruths/{index}.txt")))
+    progress.append(list(load_file(f"out/mnist/rnn/detections/{index}.txt")))
 
     point_color = colors.to_rgb("#34495e")
     for i, step in enumerate(progress):

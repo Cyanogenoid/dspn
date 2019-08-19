@@ -6,7 +6,7 @@ USE_BASELINE=$3
 
 if [ ! -z "$USE_BASELINE" ]
 then
-        PREFIX="base"
+        PREFIX="rnn"
 else
         PREFIX="dspn"
 fi

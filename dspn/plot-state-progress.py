@@ -69,8 +69,8 @@ for j, index in enumerate(args.n):
             load_file(path.format("dspn", "30", "detections", f"{index}-step{i}"))
         )
         progress.append(points)
-    progress.append(list(load_file(path.format("base", "10", "groundtruths", index))))
-    progress.append(list(load_file(path.format("base", "10", "detections", index))))
+    progress.append(list(load_file(path.format("rnn", "10", "groundtruths", index))))
+    progress.append(list(load_file(path.format("rnn", "10", "detections", index))))
 
     img = Image.open(os.path.join(base_path, val_images[int(index)]))
     img = img.resize((128, 128), Image.LANCZOS)

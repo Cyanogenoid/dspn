@@ -8,7 +8,7 @@ ITERS="10 20 30"
 
 if [ ! -z "$USE_BASELINE" ]
 then
-    ARGS="--baseline --decoder MLPDecoder"
+    ARGS="--baseline --decoder RNNDecoder"
     ITERS="10"
 fi
 
