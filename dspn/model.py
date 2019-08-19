@@ -223,3 +223,34 @@ class MLPDecoder(nn.Module):
         mask = x[:, -1]
         # match output signature of DSPN
         return [features], [mask], None, None
+
+
+class RNNDecoder(nn.Module):
+    def __init__(self, input_channels, output_channels, set_size, dim):
+        super().__init__()
+        self.output_channels = output_channels
+        self.set_size = set_size
+        self.dim = dim
+        self.lin = nn.Linear(input_channels, dim)
+        self.model = nn.LSTM(1, dim, 1)
+        self.out = nn.Conv1d(dim, output_channels, 1)
+
+    def forward(self, x):
+        # use input feature vector as initial cell state for the LSTM
+        cell = x.view(x.size(0), -1)
+        cell = self.lin(cell)
+        # zero input of size set_size to get set_size number of outputs
+        dummy_input = torch.zeros(self.set_size, cell.size(0), 1, device=cell.device)
+        # initial hidden state of zeros
+        dummy_hidden = torch.zeros(1, cell.size(0), self.dim, device=cell.device)
+        # run the LSTM
+        cell = cell.unsqueeze(0)
+        output, _ = self.model(dummy_input, (dummy_hidden, cell))
+        # project into correct number of output dims
+        output = output.permute(1, 2, 0)
+        output = self.out(output)
+        # assume last channel predicts mask
+        features = output[:, :-1]
+        mask = output[:, -1]
+        # match output signature of DSPN
+        return [features], [mask], None, None
