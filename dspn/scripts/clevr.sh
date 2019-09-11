@@ -7,11 +7,11 @@ USE_BASELINE=$3
 
 if [ ! -z "$USE_BASELINE" ]
 then
-    PREFIX="base"
-    ARGS="--baseline --decoder MLPDecoder"
+    PREFIX="rnsm"
+    ARGS="--decoder DSPN --encoder RNSumEncoder"
 else
-    PREFIX="dspn"
-    ARGS="--decoder DSPN"
+    PREFIX="rnmx"
+    ARGS="--decoder DSPN --encoder RNMaxEncoder"
 fi
 
 set -x

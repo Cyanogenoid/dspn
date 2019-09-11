@@ -6,10 +6,14 @@ USE_BASELINE=$3
 
 if [ ! -z "$USE_BASELINE" ]
 then
-        PREFIX="base"
+    PREFIX="rnsm"
+    ARGS="--decoder DSPN --encoder RNSumEncoder"
 else
-        PREFIX="dspn"
+    PREFIX="rnmx"
+    ARGS="--decoder DSPN --encoder RNMaxEncoder"
 fi
+
+echo $ARGS
 
 ARGS="$PREFIX-$DATASET-$NUM 100000 $USE_BASELINE"
 if [[ $DATASET == *"box"* ]]; then

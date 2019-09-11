@@ -196,6 +196,68 @@ class RNFSEncoder(nn.Module):
         return x
 
 
+class RNSumEncoder(nn.Module):
+    """ Relation Network with FSPool instead of sum pooling. """
+
+    def __init__(self, input_channels, output_channels, dim):
+        super().__init__()
+        self.conv = nn.Sequential(
+            nn.Conv2d(2 * input_channels + 2, dim, 1),
+            nn.ReLU(),
+            nn.Conv2d(dim, output_channels, 1),
+        )
+        self.lin = nn.Linear(dim, output_channels)
+        self.pool = FSPool(output_channels, 20, relaxed=False)
+
+    def forward(self, x, mask=None):
+        mask = mask.unsqueeze(1)
+
+        # include mask in set features
+        x = torch.cat([x, mask], dim=1)
+        # create all pairs of elements
+        x = torch.cat(utils.outer(x), dim=1)
+
+        x = self.conv(x)
+
+        # flatten pairs and scale appropriately
+        n, c, l, _ = x.size()
+        x = x.view(x.size(0), x.size(1), -1) / l / l
+
+        x = x.sum(dim=2)
+        return x
+
+
+class RNMaxEncoder(nn.Module):
+    """ Relation Network with FSPool instead of sum pooling. """
+
+    def __init__(self, input_channels, output_channels, dim):
+        super().__init__()
+        self.conv = nn.Sequential(
+            nn.Conv2d(2 * input_channels + 2, dim, 1),
+            nn.ReLU(),
+            nn.Conv2d(dim, output_channels, 1),
+        )
+        self.lin = nn.Linear(dim, output_channels)
+        self.pool = FSPool(output_channels, 20, relaxed=False)
+
+    def forward(self, x, mask=None):
+        mask = mask.unsqueeze(1)
+
+        # include mask in set features
+        x = torch.cat([x, mask], dim=1)
+        # create all pairs of elements
+        x = torch.cat(utils.outer(x), dim=1)
+
+        x = self.conv(x)
+
+        # flatten pairs and scale appropriately
+        n, c, l, _ = x.size()
+        x = x.view(x.size(0), x.size(1), -1) / l / l
+
+        x, _ = x.max(dim=2)
+        return x
+
+
 ############
 # Decoders #
 ############
