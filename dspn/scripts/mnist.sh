@@ -11,3 +11,8 @@ python train.py $ARGS --decoder DSPN --name test --resume logs/dspn-mnist --eval
 python train.py $ARGS --decoder MLPDecoder --baseline --name base-mnist
 # Baseline test and export
 python train.py $ARGS --decoder MLPDecoder --baseline --name test --resume logs/base-mnist --eval-only --export-dir out/mnist/base
+
+# RNN train
+python train.py $ARGS --decoder RNNDecoder --baseline --name rnn-mnist
+# RNN test and export
+python train.py $ARGS --decoder RNNDecoder --baseline --name test --resume logs/rnn-mnist --eval-only --export-dir out/mnist/rnn
