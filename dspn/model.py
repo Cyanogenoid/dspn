@@ -39,7 +39,7 @@ def build_net(args):
     else:
         # the set_channels + 1 is for the additional mask feature that has to be predicted
         set_decoder = set_decoder_class(
-            latent_dim, set_channels + 1, set_size, hidden_dim
+            latent_dim, set_channels + 1, set_size, hidden_dim, is_mnist=args.dataset == 'mnist'
         )
 
     if use_convolution:
@@ -202,7 +202,7 @@ class RNFSEncoder(nn.Module):
 
 
 class MLPDecoder(nn.Module):
-    def __init__(self, input_channels, output_channels, set_size, dim):
+    def __init__(self, input_channels, output_channels, set_size, dim, is_mnist):
         super().__init__()
         self.output_channels = output_channels
         self.set_size = set_size
@@ -213,6 +213,7 @@ class MLPDecoder(nn.Module):
             nn.ReLU(),
             nn.Linear(dim, output_channels * set_size),
         )
+        self.is_mnist = is_mnist
 
     def forward(self, x):
         x = x.view(x.size(0), -1)
@@ -220,13 +221,13 @@ class MLPDecoder(nn.Module):
         x = x.view(x.size(0), self.output_channels, self.set_size)
         # assume last channel predicts mask
         features = x[:, :-1]
-        mask = x[:, -1]
+        mask = x[:, -1] + int(self.is_mnist)
         # match output signature of DSPN
         return [features], [mask], None, None
 
 
 class RNNDecoder(nn.Module):
-    def __init__(self, input_channels, output_channels, set_size, dim):
+    def __init__(self, input_channels, output_channels, set_size, dim, is_mnist):
         super().__init__()
         self.output_channels = output_channels
         self.set_size = set_size
@@ -234,6 +235,7 @@ class RNNDecoder(nn.Module):
         self.lin = nn.Linear(input_channels, dim)
         self.model = nn.LSTM(1, dim, 1)
         self.out = nn.Conv1d(dim, output_channels, 1)
+        self.is_mnist = is_mnist
 
     def forward(self, x):
         # use input feature vector as initial cell state for the LSTM
@@ -251,6 +253,6 @@ class RNNDecoder(nn.Module):
         output = self.out(output)
         # assume last channel predicts mask
         features = output[:, :-1]
-        mask = output[:, -1]
+        mask = output[:, -1] + int(self.is_mnist)
         # match output signature of DSPN
         return [features], [mask], None, None
