@@ -27,20 +27,17 @@ def load_file(path):
             yield score, x, y
 
 
-plt.figure(figsize=(12, len(args.n)))
 for j, index in enumerate(args.n):
     progress = []
     for i in range(11):
-        points = list(load_file(f"out/mnist/dspn/detections/{index}-step{i}.txt"))
+        points = list(load_file(f"out/mnist/dspn-1/detections/{index}-step{i}.txt"))
         progress.append(points)
-    progress.append(list(load_file(f"out/mnist/base/groundtruths/{index}.txt")))
-    progress.append(list(load_file(f"out/mnist/base/detections/{index}.txt")))
+    progress.append(list(load_file(f"out/mnist/base-4/groundtruths/{index}.txt")))
+    progress.append(list(load_file(f"out/mnist/base-4/detections/{index}.txt")))
 
     point_color = colors.to_rgb("#34495e")
     for i, step in enumerate(progress):
-        plt.subplot(
-            len(args.n), len(progress), i + 1 + j * len(progress), aspect="equal"
-        )
+        plt.figure(figsize=(1, 1))
         score, x, y = zip(*step)
         x, y = y, x
         y = 1 - np.array(y)
@@ -55,17 +52,11 @@ for j, index in enumerate(args.n):
         y = np.array(y)[keep]
         color = color[keep]
 
-        plt.scatter(x, y, marker=".", color=color, s=4, rasterized=True)
+        plt.scatter(x, y, marker=".", color=color, s=6)
+
         plt.ylim(0, 1)
         plt.xlim(0, 1)
         plt.xticks([])
         plt.yticks([])
-        if j == 0:
-            if i == len(progress) - 2:
-                plt.title(r"Target $\bm{Y}$")
-            elif i == len(progress) - 1:
-                plt.title(r"Baseline")
-            else:
-                plt.title(r"$\bm{\hat{Y}}^{(" + str(i) + r")}$")
-filename = "mnist.pdf" if len(args.n) < 4 else "mnist-full.pdf"
-plt.savefig(filename, bbox_inches="tight", dpi=300)
+        filename = f"mnist-{index}-{i}.pdf"
+        plt.savefig(filename, bbox_inches="tight", dpi=300)

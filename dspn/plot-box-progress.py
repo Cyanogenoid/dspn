@@ -41,7 +41,6 @@ indices_to_use = args.keep
 indices_to_use.append(-2)
 indices_to_use.append(-1)
 
-plt.figure(figsize=(12, 2 * len(args.n)))
 for j, index in enumerate(args.n):
     progress = []
     log_dspn_path = "out/clevr-box/dspn-clevr-box-1-30"
@@ -55,23 +54,18 @@ for j, index in enumerate(args.n):
     point_color = colors.to_rgb("#34495e")
     for i, progress_n in enumerate(indices_to_use):
         step = progress[progress_n]
-        ax = plt.subplot(
-            len(args.n),
-            len(indices_to_use),
-            i + 1 + j * len(indices_to_use),
-            aspect="equal",
-        )
+        plt.figure(figsize=(2, 2))
+        ax = plt.gca()
         score, x1, y1, x2, y2 = zip(*step)
         print(i, progress_n)
 
         img = Image.open(os.path.join(base_path, val_images[int(index)]))
-        img = img.resize((128, 128), Image.LANCZOS)
         plt.imshow(img)
         for a, b, c, d, s in zip(x1, y1, x2, y2, np.clip(score, 0, 1)):
-            a *= 128
-            b *= 128
-            c *= 128
-            d *= 128
+            a *= 480
+            b *= 320
+            c *= 480
+            d *= 320
             rect = patches.Rectangle(
                 (a, b),
                 c - a,
@@ -84,12 +78,5 @@ for j, index in enumerate(args.n):
             ax.add_patch(rect)
         plt.xticks([])
         plt.yticks([])
-        if j == 0:
-            if progress_n == -2:
-                plt.title(r"True $\bm{Y}$")
-            elif progress_n == -1:
-                plt.title(r"Baseline")
-            else:
-                plt.title(r"$\bm{\hat{Y}}^{(" + str(progress_n) + r")}$")
-filename = "clevr.pdf" if len(args.n) < 5 else "clevr-full.pdf"
-plt.savefig(filename, bbox_inches="tight")
+        filename = f"clevr-{index}-{progress_n}.pdf"
+        plt.savefig(filename, bbox_inches="tight", dpi=600)

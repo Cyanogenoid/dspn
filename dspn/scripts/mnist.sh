@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ARGS="--show --loss chamfer --encoder FSEncoder --lr 0.01 --dim 256 --dataset mnist --epochs 100 --latent 64 --mask-feature --inner-lr 800"
+ARGS="--show --loss chamfer --encoder FSEncoder --lr 0.01 --dim 256 --dataset mnist --epochs 100 --latent 256 --mask-feature --inner-lr 800"
 
 # DSPN train
 python train.py $ARGS --decoder DSPN --name dspn-mnist

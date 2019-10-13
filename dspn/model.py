@@ -31,6 +31,9 @@ def build_net(args):
     set_encoder_class = globals()[args.encoder]
     set_decoder_class = globals()[args.decoder]
 
+    print(set_encoder_class)
+    print(set_decoder_class)
+
     set_encoder = set_encoder_class(set_channels, latent_dim, hidden_dim)
     if set_decoder_class == DSPN:
         set_decoder = DSPN(
