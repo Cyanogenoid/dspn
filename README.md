@@ -14,12 +14,13 @@ You can download pre-trained models and the predictions thereof from the [Resour
 # BibTeX entry
 
 ```
-@article{zhang2019dspn,
-  author        = {Yan Zhang and Jonathon Hare and Adam Pr\"ugel-Bennett},
-  title         = {Deep Set Prediction Networks},
-  year          = {2019},
-  eprint        = {1906.06565},
-  url           = {https://arxiv.org/abs/1906.06565}
+@inproceedings{zhang2019dspn,
+    author        = {Yan Zhang and Jonathon Hare and Adam Pr\"ugel-Bennett},
+    title         = {{Deep Set Prediction Networks}},
+    booktitle     = {Advances in Neural Information Processing Systems 32},
+    year          = {2019},
+    eprint        = {1906.06565},
+    url           = {https://arxiv.org/abs/1906.06565},
 }
 ```
 

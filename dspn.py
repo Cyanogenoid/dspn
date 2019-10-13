@@ -6,6 +6,7 @@ import torch.nn.functional as F
 class DSPN(nn.Module):
     """ Deep Set Prediction Networks
     Yan Zhang, Jonathon Hare, Adam Prügel-Bennett
+    NeurIPS 2019
     https://arxiv.org/abs/1906.06565
     """
 
