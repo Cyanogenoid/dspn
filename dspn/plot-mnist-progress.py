@@ -27,14 +27,14 @@ def load_file(path):
             yield score, x, y
 
 
-plt.figure(figsize=(12, len(args.n)))
+plt.figure(figsize=(7, len(args.n)))
 for j, index in enumerate(args.n):
     progress = []
-    for i in range(11):
-        points = list(load_file(f"out/mnist/dspn/detections/{index}-step{i}.txt"))
+    for i in range(6):
+        points = list(load_file(f"out/mnist/dspn-1/detections/{index}-step{i}.txt"))
         progress.append(points)
-    progress.append(list(load_file(f"out/mnist/base/groundtruths/{index}.txt")))
-    progress.append(list(load_file(f"out/mnist/base/detections/{index}.txt")))
+    progress.append(list(load_file(f"out/mnist/base-4/groundtruths/{index}.txt")))
+    progress.append(list(load_file(f"out/mnist/base-4/detections/{index}.txt")))
 
     point_color = colors.to_rgb("#34495e")
     for i, step in enumerate(progress):
@@ -62,10 +62,10 @@ for j, index in enumerate(args.n):
         plt.yticks([])
         if j == 0:
             if i == len(progress) - 2:
-                plt.title(r"Target $\bm{Y}$")
+                plt.title(r"Target")
             elif i == len(progress) - 1:
                 plt.title(r"Baseline")
             else:
-                plt.title(r"$\bm{\hat{Y}}^{(" + str(i) + r")}$")
-filename = "mnist.pdf" if len(args.n) < 4 else "mnist-full.pdf"
+                plt.title(f"Step {i}")
+filename = "mnist.png" if len(args.n) < 4 else "mnist-full.pdf"
 plt.savefig(filename, bbox_inches="tight", dpi=300)
