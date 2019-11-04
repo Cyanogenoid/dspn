@@ -80,3 +80,8 @@ for j, index in enumerate(args.n):
         plt.yticks([])
         filename = f"clevr-{index}-{progress_n}.pdf"
         plt.savefig(filename, bbox_inches="tight", dpi=600)
+    plt.figure(figsize=(2, 2))
+    plt.imshow(img)
+    plt.xticks([])
+    plt.yticks([])
+    plt.savefig(f'clevr-{index}.pdf', bbox_inches="tight", dpi=600)

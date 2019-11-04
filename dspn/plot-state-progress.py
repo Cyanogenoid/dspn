@@ -73,7 +73,6 @@ for j, index in enumerate(args.n):
     progress.append(list(load_file(path.format("base", "10", "detections", index))))
 
     img = Image.open(os.path.join(base_path, val_images[int(index)]))
-    img = img.resize((128, 128), Image.LANCZOS)
     plt.imshow(img)
     plt.xticks([])
     plt.yticks([])
