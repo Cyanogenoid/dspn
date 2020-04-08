@@ -238,7 +238,7 @@ def main():
                 a = a.view(-1, a.size(2), a.size(3))
                 b = b.view(-1, b.size(2), b.size(3))
                 set_loss = utils.hungarian_loss(
-                    progress[-1], target_set, thread_pool=pool
+                    a, b, thread_pool=pool
                 ).unsqueeze(0)
             # Only use representation loss with DSPN and when doing general supervised prediction, not when auto-encoding
             if args.supervised and not args.baseline:
