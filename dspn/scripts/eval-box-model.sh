@@ -3,7 +3,7 @@
 MODEL=$1
 LIMIT=$2  # how many files to process. specify smaller number to get faster results
 USE_BASELINE=$3
-THRESHOLDS="0.5 0.9 0.95 0.98 0.99"
+THRESHOLDS="0.5 0.6 0.7 0.8 0.9"
 ITERS="10 20 30"
 
 if [ ! -z "$USE_BASELINE" ]

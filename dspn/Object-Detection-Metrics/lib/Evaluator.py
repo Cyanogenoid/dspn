@@ -410,7 +410,7 @@ class Evaluator:
         union = Evaluator._getUnionAreas(boxA, boxB, interArea=interArea)
         # intersection over union
         iou = interArea / union
-        assert iou >= 0
+        iou = max(0, iou)  # worst iou is 0
         return iou
 
     # boxA = (Ax1,Ay1,Ax2,Ay2)
@@ -434,7 +434,7 @@ class Evaluator:
         xB = min(boxA[2], boxB[2])
         yB = min(boxA[3], boxB[3])
         # intersection area
-        return (xB - xA + 1) * (yB - yA + 1)
+        return (xB - xA) * (yB - yA)
 
     @staticmethod
     def _getUnionAreas(boxA, boxB, interArea=None):
@@ -446,4 +446,4 @@ class Evaluator:
 
     @staticmethod
     def _getArea(box):
-        return (box[2] - box[0] + 1) * (box[3] - box[1] + 1)
+        return (box[2] - box[0]) * (box[3] - box[1])
