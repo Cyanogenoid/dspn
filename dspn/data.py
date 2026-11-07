@@ -41,7 +41,7 @@ class MNISTSet(torch.utils.data.Dataset):
     def cache(self, dataset):
         cache_path = os.path.join(self.root, f"mnist_{self.train}_{self.threshold}.pth")
         if os.path.exists(cache_path):
-            return torch.load(cache_path)
+            return torch.load(cache_path, weights_only=True)
 
         print("Processing dataset...")
         data = []
